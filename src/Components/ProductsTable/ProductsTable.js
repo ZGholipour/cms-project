@@ -7,6 +7,7 @@ import EditModal from "../EditModal/EditModal";
 export default function ProductsTable() {
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   const [isShowDetailModal, setIsShowDetailModal] = useState(false);
+  const [isShowEditModal, setIsShowEditModal] = useState(false);
 
   const deleteModalCancelAction = () => {
     setIsShowDeleteModal(false);
@@ -17,6 +18,9 @@ export default function ProductsTable() {
 
   const closeDetailsModal = () => {
     setIsShowDetailModal(false);
+  };
+  const updateProductInfos = () => {
+    console.log("ok");
   };
 
   return (
@@ -55,7 +59,12 @@ export default function ProductsTable() {
               >
                 حذف
               </button>
-              <button className="product-table-btn">ویرایش</button>
+              <button
+                className="product-table-btn"
+                onClick={() => setIsShowEditModal(true)}
+              >
+                ویرایش
+              </button>
             </td>
           </tr>
         </tbody>
@@ -67,6 +76,12 @@ export default function ProductsTable() {
         />
       )}
       {isShowDetailModal && <DetailsModal closeModal={closeDetailsModal} />}
+      {isShowEditModal && (
+        <EditModal
+          onClose={() => setIsShowEditModal(false)}
+          onSubmit={updateProductInfos}
+        />
+      )}
     </>
   );
 }
