@@ -3,6 +3,7 @@ import "./ProductsTable.css";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import DetailsModal from "../DetailsModal/DetailsModal";
 import EditModal from "../EditModal/EditModal";
+import { AiOutlineDollarCircle } from "react-icons/ai";
 
 export default function ProductsTable() {
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
@@ -19,7 +20,8 @@ export default function ProductsTable() {
   const closeDetailsModal = () => {
     setIsShowDetailModal(false);
   };
-  const updateProductInfos = () => {
+  const updateProductInfos = (event) => {
+    event.preventDefault();
     console.log("ok");
   };
 
@@ -80,7 +82,48 @@ export default function ProductsTable() {
         <EditModal
           onClose={() => setIsShowEditModal(false)}
           onSubmit={updateProductInfos}
-        />
+        >
+          <div className="edit-products-form-group">
+            <span>
+              <AiOutlineDollarCircle />
+            </span>
+            <input
+              type="text"
+              placeholder="عنوان جدید را وارد کنید"
+              className="edit-product-input"
+            />
+          </div>
+          <div className="edit-products-form-group">
+            <span>
+              <AiOutlineDollarCircle />
+            </span>
+            <input
+              type="text"
+              placeholder="عنوان جدید را وارد کنید"
+              className="edit-product-input"
+            />
+          </div>
+          <div className="edit-products-form-group">
+            <span>
+              <AiOutlineDollarCircle />
+            </span>
+            <input
+              type="text"
+              placeholder="عنوان جدید را وارد کنید"
+              className="edit-product-input"
+            />
+          </div>
+          <div className="edit-products-form-group">
+            <span>
+              <AiOutlineDollarCircle />
+            </span>
+            <input
+              type="text"
+              placeholder="عنوان جدید را وارد کنید"
+              className="edit-product-input"
+            />
+          </div>
+        </EditModal>
       )}
     </>
   );

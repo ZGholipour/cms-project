@@ -37,5 +37,25 @@
   padding: 8px 10px;
   font-size: 1.1rem;
   border-radius: 10px;
-  margin-right: 20px;
 }
+
+/*start edit modals children styles*/
+.edit-products-form-group {
+  margin: 15px;
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  width: 90%;
+  background-color: #f4f4f4;
+  padding: 0 20px;
+  border-radius: 10px;
+}
+.edit-product-input {
+  outline: none;
+  border: none;
+  background-color: unset;
+  font-size: 1.1rem;
+  width: 80%;
+  padding: 8px 10px;
+}
+/*end edit modals children styles*/
