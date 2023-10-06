@@ -14,6 +14,14 @@ export default function ProductsTable() {
   const [productId, setProductId] = useState(null);
   const [mainProductInfo, setMainProductInfo] = useState({});
 
+  const [productNewTitle, setProductNewTitle] = useState("");
+  const [productNewPrice, setProductNewPrice] = useState("");
+  const [productNewCount, setProductNewCount] = useState("");
+  const [productNewImg, setProductNewImg] = useState("");
+  const [productNewPopularity, setProductNewPopularity] = useState("");
+  const [productNewSale, setProductNewSale] = useState("");
+  const [productNewColors, setProductNewColors] = useState("");
+
   useEffect(() => {
     getAllProducts();
   }, []);
@@ -92,7 +100,16 @@ export default function ProductsTable() {
                   </button>
                   <button
                     className="product-table-btn"
-                    onClick={() => setIsShowEditModal(true)}
+                    onClick={() => {
+                      setIsShowEditModal(true);
+                      setProductNewTitle(product.title);
+                      setProductNewPrice(product.price);
+                      setProductNewSale(product.sale);
+                      setProductNewCount(product.count);
+                      setProductNewPopularity(product.popularity);
+                      setProductNewImg(product.img);
+                      setProductNewColors(product.colors);
+                    }}
                   >
                     ویرایش
                   </button>
@@ -144,6 +161,7 @@ export default function ProductsTable() {
               type="text"
               placeholder="عنوان جدید را وارد کنید"
               className="edit-product-input"
+              value={productNewTitle}
             />
           </div>
           <div className="edit-products-form-group">
@@ -152,8 +170,9 @@ export default function ProductsTable() {
             </span>
             <input
               type="text"
-              placeholder="عنوان جدید را وارد کنید"
+              placeholder="قیمت جدید را وارد کنید"
               className="edit-product-input"
+              value={productNewPrice}
             />
           </div>
           <div className="edit-products-form-group">
@@ -162,8 +181,9 @@ export default function ProductsTable() {
             </span>
             <input
               type="text"
-              placeholder="عنوان جدید را وارد کنید"
+              placeholder="موجودی جدید را وارد کنید"
               className="edit-product-input"
+              value={productNewCount}
             />
           </div>
           <div className="edit-products-form-group">
@@ -172,8 +192,42 @@ export default function ProductsTable() {
             </span>
             <input
               type="text"
-              placeholder="عنوان جدید را وارد کنید"
+              placeholder="تصویر جدید را وارد کنید"
               className="edit-product-input"
+              value={productNewImg}
+            />
+          </div>
+          <div className="edit-products-form-group">
+            <span>
+              <AiOutlineDollarCircle />
+            </span>
+            <input
+              type="text"
+              placeholder="محبوبیت محصول جدید را وارد کنید"
+              className="edit-product-input"
+              value={productNewPopularity}
+            />
+          </div>
+          <div className="edit-products-form-group">
+            <span>
+              <AiOutlineDollarCircle />
+            </span>
+            <input
+              type="text"
+              placeholder="میزان فروش محصول جدید را وارد کنید"
+              className="edit-product-input"
+              value={productNewSale}
+            />
+          </div>
+          <div className="edit-products-form-group">
+            <span>
+              <AiOutlineDollarCircle />
+            </span>
+            <input
+              type="text"
+              placeholder="رنگ بندی محصول جدید را وارد کنید"
+              className="edit-product-input"
+              value={productNewColors}
             />
           </div>
         </EditModal>
