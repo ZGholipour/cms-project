@@ -19,6 +19,12 @@
   opacity: 1;
   visibility: visible;
 }
+.cms-main {
+  margin-top: 60px;
+  padding: 20px;
+  border-radius: 25px;
+}
+
 .cms-table {
   margin-top: 20px;
   width: 100%;
@@ -32,4 +38,10 @@
 .cms-table th,
 .cms-table td {
   padding: 20px;
+}
+.cms-table button {
+  background-color: var(--blue);
+  color: var(--white);
+  padding: 8px 15px;
+  border-radius: 10px;
 }
