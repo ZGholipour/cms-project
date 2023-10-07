@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./AddNewProduct.css";
 
-export default function AddNewProduct() {
+export default function AddNewProduct({ getAllProducts }) {
   const [newProductTitle, setNewProductTitle] = useState("");
   const [newProductPrice, setNewProductPrice] = useState("");
   const [newProductCount, setNewProductCount] = useState("");
@@ -33,7 +33,19 @@ export default function AddNewProduct() {
         return res.json();
       })
       .then((data) => console.log(data));
+    getAllProducts();
+    emptyInputs();
   };
+
+  function emptyInputs() {
+    setNewProductTitle("");
+    setNewProductPrice("");
+    setNewProductCount("");
+    setNewProductImg("");
+    setNewProductSale("");
+    setNewProductColors("");
+  }
+
   return (
     <div className="product-main">
       <h1 className="product-title">افزودن محصول جدید</h1>
