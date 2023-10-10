@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ErrorBox from "../ErrorBox/ErrorBox";
+import "./Comments.css";
 import DetailsModal from "../DetailsModal/DetailsModal";
 
 export default function Comments() {
@@ -13,7 +14,7 @@ export default function Comments() {
       .then((comments) => setAllComments(comments));
   }, []);
 
-  const closeDetailModal = () => {
+  const closeDetailsModal = () => {
     setIsShowDetailsModal(false);
   };
 
@@ -60,13 +61,14 @@ export default function Comments() {
       ) : (
         <ErrorBox msg="هیچ کامنتی یافت نشد" />
       )}
+      {isShowDetailsModal && (
+        <DetailsModal onHide={closeDetailsModal}>
+          <p className="text-modal">{mainComment}</p>
+          <button className="text-modal-close-btn" onClick={closeDetailsModal}>
+            بستن
+          </button>
+        </DetailsModal>
+      )}
     </div>
   );
-  {
-    isShowDetailsModal && (
-      <DetailsModal onHide={closeDetailModal}>
-        <p className="text-modal">{mainComment}</p>
-      </DetailsModal>
-    );
-  }
 }

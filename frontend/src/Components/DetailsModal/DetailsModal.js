@@ -14,8 +14,7 @@ export default function DetailsModal({ closeModal, children }) {
 
   return (
     <div className="modal-parent active">
-      <div className="details-modal ">{children}</div>
-      {children}
+      <div className="details-modal">{children}</div>
     </div>
   );
 }
