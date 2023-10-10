@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import ErrorBox from "../ErrorBox/ErrorBox";
 import "./Comments.css";
 import DetailsModal from "../DetailsModal/DetailsModal";
+import DeleteModal from "../DeleteModal/DeleteModal";
 
 export default function Comments() {
   const [allComments, setAllComments] = useState([]);
   const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
+  const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   const [mainComment, setMainComment] = useState("");
 
   useEffect(() => {
@@ -17,7 +19,13 @@ export default function Comments() {
   const closeDetailsModal = () => {
     setIsShowDetailsModal(false);
   };
-
+  const closeDeleteModal = () => {
+    setIsShowDeleteModal(false);
+  };
+  const deleteComment = () => {
+    console.log("comment deleted");
+    setIsShowDeleteModal(false);
+  };
   return (
     <div className="cms-main">
       {allComments.length ? (
@@ -49,7 +57,9 @@ export default function Comments() {
                 <td>{comment.date}</td>
                 <td>{comment.hour}</td>
                 <td>
-                  <button>حذف</button>
+                  <button onClick={() => setIsShowDeleteModal(true)}>
+                    حذف
+                  </button>
                   <button>ویرایش</button>
                   <button>پاسخ</button>
                   <button>تایید</button>
@@ -68,6 +78,12 @@ export default function Comments() {
             بستن
           </button>
         </DetailsModal>
+      )}
+      {isShowDeleteModal && (
+        <DeleteModal
+          cancelAction={closeDeleteModal}
+          submitAction={deleteComment}
+        ></DeleteModal>
       )}
     </div>
   );
