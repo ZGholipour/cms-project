@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
 import ErrorBox from "../ErrorBox/ErrorBox";
+import DetailsModal from "../DetailsModal/DetailsModal";
 
 export default function Comments() {
   const [allComments, setAllComments] = useState([]);
+  const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
+  const [mainComment, setMainComment] = useState("");
+
   useEffect(() => {
     fetch(`http://localhost:8000/api/comments/`)
       .then((res) => res.json())
       .then((comments) => setAllComments(comments));
   }, []);
+
+  const closeDetailModal = () => {
+    setIsShowDetailsModal(false);
+  };
+
   return (
     <div className="cms-main">
       {allComments.length ? (
@@ -27,7 +36,14 @@ export default function Comments() {
                 <td>{comment.userID}</td>
                 <td>{comment.productID}</td>
                 <td>
-                  <button>دیدن متن</button>
+                  <button
+                    onClick={() => {
+                      setMainComment(comment.body);
+                      setIsShowDetailsModal(true);
+                    }}
+                  >
+                    دیدن متن
+                  </button>
                 </td>
                 <td>{comment.date}</td>
                 <td>{comment.hour}</td>
@@ -46,4 +62,11 @@ export default function Comments() {
       )}
     </div>
   );
+  {
+    isShowDetailsModal && (
+      <DetailsModal onHide={closeDetailModal}>
+        <p className="text-modal">{mainComment}</p>
+      </DetailsModal>
+    );
+  }
 }
