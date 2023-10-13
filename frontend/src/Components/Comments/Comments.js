@@ -11,9 +11,10 @@ export default function Comments() {
   const [isShowDetailsModal, setIsShowDetailsModal] = useState(false);
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   const [isShowEditModal, setIsShowEditModal] = useState(false);
+  const [isShowAcceptModal, setIsShowAcceptModal] = useState(false);
+  const [isShowRejectModal, setIsShowRejectModal] = useState(false);
   const [mainCommentBody, setMainCommentBody] = useState("");
   const [commentID, setCommentID] = useState(null);
-  const [isShowAcceptModal, setIsShowAcceptModal] = useState(false);
 
   useEffect(() => {
     getAllComments();
@@ -28,6 +29,32 @@ export default function Comments() {
   const closeDetailsModal = () => setIsShowDetailsModal(false);
   const closeDeleteModal = () => setIsShowDeleteModal(false);
   const closeEditModal = () => setIsShowEditModal(false);
+  const closeAcceptModal = () => setIsShowAcceptModal(false);
+  const closeRejectModal = () => setIsShowRejectModal(false);
+
+  const rejectComment = () => {
+    fetch(`http://localhost:8000/api/comments/reject/${commentID}`, {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setIsShowRejectModal(false);
+        getAllComments();
+      });
+  };
+
+  const acceptComment = () => {
+    fetch(`http://localhost:8000/api/comments/accept/${commentID}`, {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setIsShowAcceptModal(false);
+        getAllComments();
+      });
+
+    setIsShowAcceptModal(false);
+  };
 
   const deleteComment = () => {
     fetch(`http://localhost:8000/api/comments/${commentID}`, {
@@ -35,7 +62,6 @@ export default function Comments() {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
         setIsShowDeleteModal(false);
         getAllComments();
       });
@@ -55,28 +81,15 @@ export default function Comments() {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
         setIsShowEditModal(false);
         getAllComments();
       });
   };
 
-  const closeAcceptModal = () => setIsShowAcceptModal(false);
-  const acceptComment = () => {
-    fetch(`http://localhost:8000/api/comments/accept/${commentID}`, {
-      method: "POST",
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-        setIsShowAcceptModal(false);
-        getAllComments();
-      });
-
-    setIsShowAcceptModal(false);
-  };
   return (
     <div className="cms-main">
+      <h1 className="cms-title">لیست کامنت‌ها</h1>
+
       {allComments.length ? (
         <table className="cms-table">
           <thead>
@@ -125,7 +138,8 @@ export default function Comments() {
                     ویرایش
                   </button>
                   <button>پاسخ</button>
-                  {comment.isAccept === 0 && (
+
+                  {comment.isAccept === 0 ? (
                     <button
                       onClick={() => {
                         setIsShowAcceptModal(true);
@@ -133,6 +147,15 @@ export default function Comments() {
                       }}
                     >
                       تایید
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        setIsShowRejectModal(true);
+                        setCommentID(comment.id);
+                      }}
+                    >
+                      رد
                     </button>
                   )}
                 </td>
@@ -155,9 +178,9 @@ export default function Comments() {
 
       {isShowDeleteModal && (
         <DeleteModal
+          title="آیا از حذف اطمینان دارید؟"
           cancelAction={closeDeleteModal}
           submitAction={deleteComment}
-          title={"آیا از حذف کامنت مطئن هستید؟"}
         />
       )}
       {isShowEditModal && (
@@ -171,9 +194,17 @@ export default function Comments() {
 
       {isShowAcceptModal && (
         <DeleteModal
+          title="آیا از تایید اطمینان دارید؟"
           cancelAction={closeAcceptModal}
           submitAction={acceptComment}
-          title={"آیا از تایید کامنت مطئن هستید؟"}
+        />
+      )}
+
+      {isShowRejectModal && (
+        <DeleteModal
+          title="آیا از رد کامنت اطمینان دارید؟"
+          cancelAction={closeRejectModal}
+          submitAction={rejectComment}
         />
       )}
     </div>
