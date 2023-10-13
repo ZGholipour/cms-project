@@ -13,6 +13,7 @@ export default function Comments() {
   const [isShowEditModal, setIsShowEditModal] = useState(false);
   const [mainCommentBody, setMainCommentBody] = useState("");
   const [commentID, setCommentID] = useState(null);
+  const [isShowAcceptModal, setIsShowAcceptModal] = useState(false);
 
   useEffect(() => {
     getAllComments();
@@ -60,6 +61,20 @@ export default function Comments() {
       });
   };
 
+  const closeAcceptModal = () => setIsShowAcceptModal(false);
+  const acceptComment = () => {
+    fetch(`http://localhost:8000/api/comments/accept/${commentID}`, {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setIsShowAcceptModal(false);
+        getAllComments();
+      });
+
+    setIsShowAcceptModal(false);
+  };
   return (
     <div className="cms-main">
       {allComments.length ? (
@@ -110,7 +125,16 @@ export default function Comments() {
                     ویرایش
                   </button>
                   <button>پاسخ</button>
-                  <button>تایید</button>
+                  {comment.isAccept === 0 && (
+                    <button
+                      onClick={() => {
+                        setIsShowAcceptModal(true);
+                        setCommentID(comment.id);
+                      }}
+                    >
+                      تایید
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
@@ -133,6 +157,7 @@ export default function Comments() {
         <DeleteModal
           cancelAction={closeDeleteModal}
           submitAction={deleteComment}
+          title={"آیا از حذف کامنت مطئن هستید؟"}
         />
       )}
       {isShowEditModal && (
@@ -142,6 +167,14 @@ export default function Comments() {
             onChange={(event) => setMainCommentBody(event.target.value)}
           ></textarea>
         </EditModal>
+      )}
+
+      {isShowAcceptModal && (
+        <DeleteModal
+          cancelAction={closeAcceptModal}
+          submitAction={acceptComment}
+          title={"آیا از تایید کامنت مطئن هستید؟"}
+        />
       )}
     </div>
   );
