@@ -1,14 +1,16 @@
-import React, { Children, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./DetailsModal.css";
 
-export default function DetailsModal({ closeModal, children }) {
+export default function DetailsModal({ onHide, children }) {
   useEffect(() => {
     const checkKey = (event) => {
       if (event.keyCode === 27) {
-        closeModal();
+        onHide();
       }
     };
+
     window.addEventListener("keydown", checkKey);
+
     return () => window.removeEventListener("keydown", checkKey);
   });
 
